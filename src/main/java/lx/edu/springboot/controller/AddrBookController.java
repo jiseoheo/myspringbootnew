@@ -6,19 +6,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpServletRequest;
+import lx.edu.springboot.MyspringbootApplication;
 import lx.edu.springboot.dao.AddrBookDAO;
 import lx.edu.springboot.vo.AddrBookVO;
 
 @Controller
 public class AddrBookController {
+
+    private final MyspringbootApplication myspringbootApplication;
+
+    private final HelloController helloController;
 	
 	@Autowired
 	ApplicationContext context;
 
 	@Autowired
 	AddrBookDAO dao;
+
+    AddrBookController(HelloController helloController, MyspringbootApplication myspringbootApplication) {
+        this.helloController = helloController;
+        this.myspringbootApplication = myspringbootApplication;
+    }
 
 	@RequestMapping("/insert.do")
 	public String insert(AddrBookVO vo) throws Exception {
@@ -31,6 +43,7 @@ public class AddrBookController {
 	public String form() {
 		return "addrbook_form";//jsp file name
 	}
+
 	
 //	@RequestMapping("addrbook_list.do")
 //	public String list(HttpServletRequest req) throws Exception {
@@ -62,20 +75,19 @@ public class AddrBookController {
 	
 	}
 	 */
-	
-/*
+
 	@RequestMapping("/edit.do")
-	public ModelAndView edit(@RequestParam("abId") int abId) throws Exception {
-	    
-	    ModelAndView result = new ModelAndView();
+	public String edit(@RequestParam("abId") int abId, HttpServletRequest req) throws Exception {
 	    AddrBookVO vo = dao.getDB(abId);
-	    result.addObject("ab", vo);
-	    result.setViewName("addrbook_edit_form");
-	    return result;
+	    req.setAttribute("ab", vo);
+	    return "addrbook_edit_form";
 	}
 	
-	*/
-	
+	public String update(AddrBookVO vo) throws Exception {
+		System.out.println("vo=" + vo);
+		return "redirect:addrbook_list.do";
+	}
+
 
 	
 	
