@@ -60,7 +60,6 @@ public class AddrBookController {
 		result.addObject("data", list);
 		result.setViewName("addrbook_list");
 		return result;
-		
 	}
 	
 	/*
@@ -83,6 +82,7 @@ public class AddrBookController {
 	    return "addrbook_edit_form";
 	}
 	
+	@RequestMapping("/update.do")
 	public String update(AddrBookVO vo) throws Exception {
 		System.out.println("vo=" + vo);
 		return "redirect:addrbook_list.do";
